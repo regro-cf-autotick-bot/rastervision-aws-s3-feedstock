@@ -7,13 +7,13 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/rastervision_aws_s3-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/rastervision_aws_s3-{{ version }}.tar.gz
   sha256: 43dae2e18221417677d69b10f9a6b1c6788abbf950484c3b42e46baa13a8dbc7
   patches:
     - 0001-fix-imports.patch
 
 build:
-  number: 0
+  number: 1
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
   entry_points:
@@ -22,11 +22,11 @@ build:
 requirements:
   host:
     - pip
-    - python >=3.6
+    - python {{ python_min }}
   run:
     - awscli
     - boto3
-    - python >=3.6
+    - python >={{ python_min }}
     - rastervision-pipeline ==0.13.1
 
 test:
@@ -36,6 +36,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/azavea/raster-vision
